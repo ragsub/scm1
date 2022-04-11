@@ -1,0 +1,90 @@
+{%extends "scm/base.html"%}
+
+{%block title%}Locations{%endblock%}
+
+{%block content%}
+
+<div class="row mb-2 pb-2 justify-content-center">
+    <div class="col text-center">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link d-flex" x-ref="filter_trigger" id="nav-filter-tab" data-bs-toggle="tab" data-bs-target="#filter" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><i class="bi bi-funnel-fill"></i><span class="d-none d-lg-block px-2">Filter</span></button>
+                <button class="nav-link d-flex" x-ref="action_trigger" id="nav-action-tab" data-bs-toggle="tab" data-bs-target="#action" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="bi bi-gear-fill"></i><span class="d-none d-lg-block px-2">Action</span></button>        
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="container border p-2 mx-2 tab-pane fade" id ="action" x-ref="action_tab">
+        <div class="row">
+            <div class="col text-end">
+                <button class = "btn" x-on:click="$refs.action_trigger.classList.remove('active');$refs.action_tab.classList.remove('active');">
+                    <i class="bi bi-arrow-bar-up"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-sm-12 my-1 ">
+                <button hx-get={%url "SCM.Location:add_location"%} hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-primary w-100" @htmx:after-on-load.camel="console.log('hi');setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);">Add</button>
+            </div>
+            <div class="col-lg-3 col-sm-12 my-1">
+                <button type="button" class="btn btn-danger w-100">Delete Filtered</button>
+            </div>
+            <div class="col-lg-3 col-sm-12 my-1">
+                <button type="button" class="btn btn-secondary w-100">Upload</button>
+            </div>
+            <div class="col-lg-3 col-sm-12 my-1">
+                <button type="button" class="btn btn-secondary w-100">Download</button>
+            </div>
+        </div>
+    </div>
+    
+    <form class="container tab-pane fade border p-2 mx-2" x-ref="filter_tab" id="filter" method="GET">
+        <div class="row">
+            <div class="col text-end">
+                <button class = "btn" x-on:click="$refs.filter_tab.classList.remove('active');$refs.filter_trigger.classList.remove('active');">
+                    <i class="bi bi-arrow-bar-up"></i>
+                </button>
+            </div>
+        </div>
+        
+        {{filter.form}}
+        
+        <div class="row mt-2 pt-2">
+            <div class="col-lg-3 col-sm-12">
+                <div><button class="btn btn-primary w-100" style="size:20px">Filter</button></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Code</div>
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Description</div>
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Detail</div>
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Actions</div>
+    </div>
+    <div class="row">
+        <div class="col border-bottom d-none d-lg-block">
+        </div>
+    </div>
+
+    {%for record in qs%}
+    <div class="row my-1 py-1 table-hover border-bottom rounded {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
+        <div class="col-lg col-sm-6 d-lg-none fw-bold">Code:</div>
+        <div class="col-lg col-sm-6">{{record.code}}</div>
+        <div class="col-lg col-sm-6 d-lg-none fw-bold">Description:</div>
+        <div class="col-lg col-sm-6">{{record.description}}</div>
+        <div class="col-lg col-sm-6 d-lg-none fw-bold">Detail:</div>
+        <div class="col-lg col-sm-6">{{record.detail}}</div>
+        <div class="col-lg col-sm-6 d-lg-none fw-bold">Actions:</div>
+        <div class="col">
+            <a href="" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+            <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash-fill"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}

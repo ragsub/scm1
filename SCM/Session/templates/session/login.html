@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include "scm/__include.html"%}
+    <title>Login</title>
+</head>
+
+<body x-data="{}"  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <div class="container d-flex flex-column vh-100 justify-content-center align-items-center">
+        <div x-ref="x_new_tenant_modal" id="new_tenant_modal" class="modal" tabindex="-1"></div>
+
+        <div class="row my-2 py-2 no-gutters">
+            <div class="col d-flex justify-content-center p-0 m-0">
+                {%include "scm/__brand.html"%}
+            </div>
+            <p class="fst-italic text-center">Simplify supply chain management</p>
+        </div>
+            
+        <div class="row my-3 py-3 justify-content-center">
+            <div class="col align-items-center">
+                <div class="form-group">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form}}
+                        <div><button class="btn btn-primary w-100">Log In</button></div>
+                    </form>
+                    <div class="my-2 py-2"><button hx-get={% url "SCM.Tenant:register"%} hx-target="#new_tenant_modal" hx-trigger="click" @htmx:after-on-load.camel="setTimeout(function() {register_modal=new bootstrap.Modal($refs.x_new_tenant_modal);register_modal.show()},100)" class="btn btn-secondary w-100">Create Account</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

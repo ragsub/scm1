@@ -1,0 +1,7 @@
+{% if errors %}
+    <ul class="{{ error_class }} mb-2 pb-2 mt-0 pt-0 list-group list-group-flush">
+        {% for error in errors %}
+        <li class="list-group-item list-group-item-danger">{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

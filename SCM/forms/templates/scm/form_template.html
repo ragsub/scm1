@@ -1,0 +1,33 @@
+{{ errors }}
+{% if errors and not fields %}
+  <p>
+    {% for field in hidden_fields %}
+      {{ field }}
+    {% endfor %}
+  </p>
+{% endif %}
+
+{% for field, errors in fields %}
+  <div class="fw-bold">
+    {% if field.label %}{{ field.label_tag }}{% endif %}
+  </div>
+  <div>
+    {{ field }}
+  </div>
+    {{ errors }}
+
+    {% if field.help_text %}
+      <span class="helptext">{{ field.help_text|safe }}</span>
+    {% endif %}
+    
+    {% if forloop.last %}
+      {% for field in hidden_fields %}{{ field }}{% endfor %}
+    {% endif %}
+  </p>
+
+{% endfor %}
+{% if not fields and not errors %}
+  {% for field in hidden_fields %}{{ field }}{% endfor %}
+{% endif %}
+
+

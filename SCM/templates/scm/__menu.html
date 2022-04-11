@@ -1,0 +1,40 @@
+
+<nav class="navbar navbar-light navbar-expand-lg bg-light">
+  <div class="container-fluid flex-lg-column">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-brand d-lg-none">
+      <div class="d-flex justify-content-center p-0 m-0">
+        {%include "scm/__brand.html"%}
+      </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      {% comment %} <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div> {% endcomment %}
+      <div class="offcanvas-body">
+        <div class="navbar-nav flex-column justify-content-start flex-grow-1 pe-3 vh-100">
+          <div class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </div>
+          <div class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </div>
+          <div class="nav-item dropdown dropend">
+            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Master Data
+            </a>
+            <div class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+              <div><a class="dropdown-item" href={%url "SCM.Location:view_locations"%}>Location Master</a></div>
+              <div><a class="dropdown-item" href="#">Product Master</a></div>
+              <div><a class="dropdown-item" href="#">Location Product Master</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

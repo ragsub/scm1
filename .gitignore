@@ -1,0 +1,15 @@
+*.pyc
+bin
+bin/
+include
+include/
+lib
+lib/
+lib64
+lib64/
+share
+share/
+db.sqlite3
+__pycache__
+__pycache__/
+*/__pycache__
