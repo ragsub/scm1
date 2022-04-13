@@ -46,3 +46,25 @@ def add_location(request):
     else:
         context['form'] = AddLocationForm()
     return render(request=request,template_name='location/add.html',context=context)
+
+def edit_location(request, location_id):
+    context = {}
+    if request.method == 'POST':
+        form = AddLocationForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+            except IntegrityError as e:
+                if "unique_location_code" in e.args[0]: 
+                    messages.add_message(request=request,level=messages.ERROR,message='Location with code already exists')
+                elif "unique_location_description" in e.args[0]:
+                    messages.add_message(request=request,level=messages.ERROR,message='Location with description already exists')
+            else:
+                messages.add_message(request=request,level=messages.SUCCESS,message='Location added successfully' )
+        
+        context['form'] = form
+        
+    else:
+        location_instance = Location.objects.get(pk=location_id)
+        context['form'] = AddLocationForm(instance = location_instance)
+    return render(request=request,template_name='location/add.html',context=context)

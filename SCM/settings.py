@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'SCM.Tenant',
     'SCM.Session',
     'SCM.Location',
+    'SCM.Tags',
 ]
 
 AUTH_USER_MODEL = 'User.User'

@@ -4,6 +4,8 @@
 
 {%block content%}
 
+{% load tags %}
+
 <div class="row mb-2 pb-2 justify-content-center">
     <div class="col text-center">
         <nav>
@@ -24,9 +26,11 @@
                 </button>
             </div>
         </div>
+        
+        {% with add_url="SCM.Location:add_location"  %}     
         <div class="row">
             <div class="col-lg-3 col-sm-12 my-1 ">
-                <button hx-get={%url "SCM.Location:add_location"%} hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-primary w-100" @htmx:after-on-load.camel="console.log('hi');setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);">Add</button>
+                <button hx-get={%url add_url%} hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-primary w-100" @htmx:after-on-load.camel="console.log('hi');setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);">Add</button>
             </div>
             <div class="col-lg-3 col-sm-12 my-1">
                 <button type="button" class="btn btn-danger w-100">Delete Filtered</button>
@@ -38,6 +42,7 @@
                 <button type="button" class="btn btn-secondary w-100">Download</button>
             </div>
         </div>
+        {%endwith%}
     </div>
     
     <form class="container tab-pane fade border p-2 mx-2" x-ref="filter_tab" id="filter" method="GET">
@@ -59,11 +64,19 @@
     </form>
 </div>
 
+{% with add_url="SCM.Location:add_location"  %}     
 <div class="container">
     <div class="row">
-        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Code</div>
-        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Description</div>
-        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Detail</div>
+        {% get_list_from_queryset qs.object_list as obj%}
+        {% for instance in obj %}
+        {%if forloop.first%}
+        {%for field,value in instance.fields.items%}
+        {%if not forloop.first%}
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">{% get_verbose_field_name qs.object_list.model field%} </div>
+        {%endif%}
+        {%endfor%}
+        {%endif%}
+        {%endfor%}
         <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Actions</div>
     </div>
     <div class="row">
@@ -71,20 +84,23 @@
         </div>
     </div>
 
-    {%for record in qs%}
-    <div class="row my-1 py-1 table-hover border-bottom rounded {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
-        <div class="col-lg col-sm-6 d-lg-none fw-bold">Code:</div>
-        <div class="col-lg col-sm-6">{{record.code}}</div>
-        <div class="col-lg col-sm-6 d-lg-none fw-bold">Description:</div>
-        <div class="col-lg col-sm-6">{{record.description}}</div>
-        <div class="col-lg col-sm-6 d-lg-none fw-bold">Detail:</div>
-        <div class="col-lg col-sm-6">{{record.detail}}</div>
-        <div class="col-lg col-sm-6 d-lg-none fw-bold">Actions:</div>
-        <div class="col">
+    {% get_list_from_queryset qs.object_list as obj%}
+    {% for instance in obj %}
+    <div class="row py-1 border-bottom rounded {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
+    {%for field,value in instance.fields.items%}
+    {%if not forloop.first%}
+        <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">{% get_verbose_field_name qs.object_list.model field%}</div>
+        <div class="col-lg col-sm-6 my-1">{{value}}</div>
+    {%endif%}
+    {%endfor%}
+        <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">Actions</div>
+        <div class="col-lg col-sm-6 my-1">
             <a href="" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
             <a href="" class="btn btn-sm btn-primary"><i class="bi bi-trash-fill"></i></a>
         </div>
     </div>
     {% endfor %}
+
 </div>
+{%endwith%}
 {%endblock%}
