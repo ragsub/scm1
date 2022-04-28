@@ -3,3 +3,6 @@ psycopg2-binary
 dj-database-url
 redis
 django-filter
+whitenoise
+celery
+celery[redis]

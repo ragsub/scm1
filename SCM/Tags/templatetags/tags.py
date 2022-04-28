@@ -3,9 +3,17 @@ from django.core import serializers
 
 register = template.Library()
 
-@register.filter
-def get_fields(obj): 
-    return obj._meta.get_fields()
+@register.simple_tag
+def get_plural_verbose_model_name(obj): 
+    return obj._meta.verbose_name_plural
+
+@register.simple_tag
+def get_verbose_model_name(obj): 
+    return obj._meta.verbose_name
+
+@register.simple_tag
+def get_verbose_model_name_from_form(obj): 
+    return obj._meta.model._meta.verbose_name
 
 @register.simple_tag
 def get_verbose_field_name(obj, field_name):

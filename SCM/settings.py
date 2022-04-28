@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os, dj_database_url
+from django.core.management.utils import get_random_secret_key
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-xl0dh!z1+r2uq74u4tu#=y5bx#xuai0t@w&ne@q@wgv@6=uqsc')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == "True"
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1, localhost').split(",")
+
+CELERY_BROKER_URL = os.environ.get('REDIS_URL','redis://localhost:6379/0')
+
+#CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # Application definition
 
@@ -49,8 +58,8 @@ AUTH_USER_MODEL = 'User.User'
 TENANT_MODEL = 'Tenant.Tenant'
 
 LOGIN_REDIRECT_URL = '/session/welcome'
-LOGOUT_REDIRECT_URL = '/user/login'
-LOGIN_URL = '/user/login'
+LOGOUT_REDIRECT_URL = '/session/login'
+LOGIN_URL = '/session/login'
 
 
 #session settings
@@ -158,8 +167,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

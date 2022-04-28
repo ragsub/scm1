@@ -15,3 +15,5 @@ class Location(TenantAwareMixin):
             models.UniqueConstraint(fields=['tenant','description'],name='unique_location_description')
         ]
         ordering = ['code']
+        verbose_name = 'Location'
+        verbose_name_plural = 'Locations'

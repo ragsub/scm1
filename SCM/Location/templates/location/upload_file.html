@@ -2,19 +2,19 @@
     <div class="modal-dialog" role="document" id="edit_modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit a {%get_verbose_model_name_from_form form%}</h5>
+                <h5 class="modal-title">{{form.description}}</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form >
+                <form>
                     {% csrf_token %}
                     {{form}}
                     {% if messages %}
                     {%include "location/__messages.html"%}
                     {% endif %}
-                    <button type="button" hx-trigger="click" hx-post={{request.path}} hx-target="#edit_modal" hx-swap="outerHTML" class="btn btn-primary">Edit</button>
+                    <button type="button" hx-encoding="multipart/form-data" hx-trigger="click" hx-post={{request.path}} hx-target="#edit_modal" hx-swap="outerHTML" class="btn btn-primary my-3">Upload</button>
                 </form>
             </div>
         </div>
