@@ -6,3 +6,4 @@ django-filter
 whitenoise
 celery
 celery[redis]
+gunicorn
