@@ -1,4 +1,5 @@
 {{ errors }}
+
 {% if errors and not fields %}
   <p>
     {% for field in hidden_fields %}
@@ -14,6 +15,7 @@
   <div>
     {{ field }}
   </div>
+
     {{ errors }}
 
     {% if field.help_text %}
@@ -23,7 +25,6 @@
     {% if forloop.last %}
       {% for field in hidden_fields %}{{ field }}{% endfor %}
     {% endif %}
-  </p>
 
 {% endfor %}
 {% if not fields and not errors %}

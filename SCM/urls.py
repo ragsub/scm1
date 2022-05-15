@@ -20,6 +20,6 @@ urlpatterns = [
 #    path('admin/', admin.site.urls),
     path('session/',include('SCM.Session.urls')),
     path('tenant/',include('SCM.Tenant.urls')),
-    path('location/',include('SCM.Location.urls')),
+    path('store/',include('SCM.Store.urls')),
 
 ]

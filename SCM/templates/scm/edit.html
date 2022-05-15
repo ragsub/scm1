@@ -12,7 +12,7 @@
                     {% csrf_token %}
                     {{form}}
                     {% if messages %}
-                    {%include "location/__messages.html"%}
+                    {%include "scm/__messages.html"%}
                     {% endif %}
                     <button type="button" hx-trigger="click" hx-post={{request.path}} hx-target="#edit_modal" hx-swap="outerHTML" class="btn btn-primary">Edit</button>
                 </form>

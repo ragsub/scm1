@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'SCM.User',
     'SCM.Tenant',
     'SCM.Session',
-    'SCM.Location',
+    'SCM.Store',
     'SCM.Tags',
 ]
 
@@ -111,6 +111,7 @@ WSGI_APPLICATION = 'SCM.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+print(os.getenv("DEVELOPMENT_MODE"))
 
 if DEVELOPMENT_MODE is True:
 

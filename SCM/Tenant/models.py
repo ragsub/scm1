@@ -47,8 +47,6 @@ class TenantAwareMixin(models.Model):
     def save(self, *args, **kwargs):
         if not self.tenant_id:
             self.tenant = get_current_tenant()
-            print(self.tenant)
-
         super().save(*args, **kwargs)
 
 class UserToTenant(TenantAwareMixin):

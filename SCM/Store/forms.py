@@ -1,22 +1,28 @@
 from django import forms
 from django.core.validators import FileExtensionValidator
 
-from SCM.Location.models import Location
-
-class AddLocationForm(forms.ModelForm):
+from SCM.Store.models import Store
+from SCM.forms import CustomModelForm
+class AddLocationForm(CustomModelForm):
     template_name = 'scm/form_template.html'
     class Meta:
-        model = Location
-        fields = ['code','description','detail']
+        model = Store
+        fields = ['code','description','detail','latitude','longitude']
         widgets = {
             'code': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control'}),
-            'detail': forms.TextInput(attrs={'class': 'form-control'})
+            'detail': forms.TextInput(attrs={'class': 'form-control'}),
+            'latitude': forms.TextInput(attrs={'class': 'form-control'}),
+            'longitude': forms.TextInput(attrs={'class': 'form-control'})
+
+
         }
         labels = {
             'code': 'Code:',
             'description':'Description:',
-            'detail':'Detail:'
+            'detail':'Detail:',
+            'latitude':'Latitude',
+            'longitude':'Longitude'
         }
 
 class UploadLocationForm(forms.Form):

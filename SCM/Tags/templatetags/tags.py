@@ -22,3 +22,13 @@ def get_verbose_field_name(obj, field_name):
 @register.simple_tag
 def get_list_from_queryset(obj):
     return serializers.serialize('python',obj)
+
+@register.simple_tag
+def url_transform(request, **kwargs):
+    """usages: {% url_transform request page=1 %}"""
+    updated = request.GET.copy()
+
+    for k, v in kwargs.items():
+        updated[k] = v
+
+    return updated.urlencode()

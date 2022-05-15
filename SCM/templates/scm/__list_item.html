@@ -1,0 +1,40 @@
+{% load tags %}
+
+<div class="container">
+    <div class="row">
+        {% get_list_from_queryset page_obj.object_list as obj%}
+        {% for instance in obj %}
+        {%if forloop.first%}
+        {%for field,value in instance.fields.items%}
+        {%if not forloop.first%}
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">{% get_verbose_field_name page_obj.object_list.model field%} </div>
+        {%endif%}
+        {%endfor%}
+        {%endif%}
+        {%endfor%}
+        <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Actions</div>
+    </div>
+    
+    <div class="row">
+        <div class="col border-bottom d-none d-lg-block">
+        </div>
+    </div>
+
+    {% get_list_from_queryset page_obj.object_list as obj%}
+    {% for instance in obj %}
+    <div class="row py-1 border-bottom rounded {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
+    {%for field,value in instance.fields.items%}
+    {%if not forloop.first%}
+        <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">{% get_verbose_field_name page_obj.object_list.model field%}</div>
+        <div class="col-lg col-sm-6 my-1">{{value}}</div>
+    {%endif%}
+    {%endfor%}
+        <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">Actions</div>
+        <div class="col-lg col-sm-6 my-1">
+            <a hx-get="{% url edit_url location_id=instance.pk%}" hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-sm btn-primary" @htmx:after-on-load.camel="setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);"><i class="bi bi-pencil-fill"></i></a>
+            <a hx-get="{% url delete_url location_id=instance.pk%}" hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-sm btn-primary" @htmx:after-on-load.camel="setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);"><i class="bi bi-trash-fill"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>

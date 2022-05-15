@@ -8,10 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form >
+                <form>
                     {% csrf_token %}
                     {{form}}
-                    {%include "location/__messages.html"%}
+                    {%include "scm/__messages.html"%}
                     <button type="button" hx-trigger="click" hx-post={{request.path}} hx-target="#add_modal" hx-swap="outerHTML" class="btn btn-primary">Add</button>
                 </form>
             </div>

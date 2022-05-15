@@ -16,7 +16,7 @@
         <div class="row my-2 py-2 no-gutters">
             <div class="col d-flex justify-content-center p-0 m-0">
                 {%include "scm/__brand.html"%}
-            </div>
+            </div> 
             <p class="fst-italic text-center">Simplify supply chain management</p>
         </div>
             
@@ -26,7 +26,8 @@
                     <form method="post">
                         {% csrf_token %}
                         {{form}}
-                        <div><button class="btn btn-primary w-100">Log In</button></div>
+                        {%include "scm/__messages.html"%}
+                        <div><button class="btn btn-primary mt-2 pt-2 w-100">Log In</button></div>
                     </form>
                     <div class="my-2 py-2"><button hx-get={% url "SCM.Tenant:register"%} hx-target="#new_tenant_modal" hx-trigger="click" @htmx:after-on-load.camel="setTimeout(function() {register_modal=new bootstrap.Modal($refs.x_new_tenant_modal);register_modal.show()},100)" class="btn btn-secondary w-100">Create Account</button></div>
                 </div>

@@ -1,0 +1,57 @@
+{%extends "scm/base.html"%}
+
+{% load tags %}
+
+{%block title%}{%get_plural_verbose_model_name page_obj.object_list.model%}{%endblock%}
+
+{%block content%}
+
+
+<div class="row mb-2 pb-2 justify-content-center">
+    <div class="col text-center">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link d-flex" x-ref="filter_trigger" id="nav-filter-tab" x-data="{show_filter:false}" x-init="show_filter=false" x-on:click="show_filter=!show_filter; if (show_filter===true) {let filter_tab = bootstrap.Tab.getOrCreateInstance($refs.filter_trigger); filter_tab.show();} else {$refs.filter_tab.classList.remove('active');$refs.filter_trigger.classList.remove('active');}" data-bs-target="#filter" role="tab" aria-controls="nav-home" aria-selected="false"><i class="bi bi-funnel-fill"></i><span class="d-none d-lg-block px-2">Filter</span></button>
+                <button class="nav-link d-flex" x-ref="action_trigger" id="nav-action-tab" x-data="{show_action:false}" x-init="show_action=false" x-on:click="show_action=!show_action; if (show_action===true) {let action_tab = bootstrap.Tab.getOrCreateInstance($refs.action_trigger); action_tab.show();} else {$refs.action_tab.classList.remove('active');$refs.action_trigger.classList.remove('active');}" data-bs-target="#action" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="bi bi-gear-fill"></i><span class="d-none d-lg-block px-2">Action</span></button>        
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="container border p-2 mx-2 tab-pane fade" id ="action" x-ref="action_tab">
+        {% with add_url="SCM.Store:add_store" upload_url="SCM.Store:upload_store" %}     
+        <div class="row">
+            <div class="col-lg-3 col-sm-12 my-1 ">
+                <button hx-get={%url add_url%} hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-primary w-100" @htmx:after-on-load.camel="setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);">Add</button>
+            </div>
+            <div class="col-lg-3 col-sm-12 my-1">
+                <button type="button" class="btn btn-danger w-100">Delete Filtered</button>
+            </div>
+        </div>
+        {%endwith%}
+    </div>
+    
+    <form class="container tab-pane fade border p-2 mx-2" x-ref="filter_tab" id="filter" method="GET">
+        {{filter.form}}
+        <div class="row mt-2 pt-2">
+            <div class="col-lg-3 col-sm-12">
+                <div><button class="btn btn-primary w-100" style="size:20px">Filter</button></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% with add_url="SCM.Store:add_store" edit_url="SCM.Store:edit_store" delete_url="SCM.Store:delete_store"%}     
+    {%include "scm/__list_item.html"%}
+{%endwith%}
+
+<div class="container">
+<div class="row my-3">
+    <div class="col d-flex flex-column align-items-center">
+        {%include "scm/__pagination.html"%}
+    </div>
+</div>
+</div>
+{%endblock%}
+    

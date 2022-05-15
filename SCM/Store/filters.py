@@ -2,7 +2,7 @@ from django_filters import FilterSet
 from django_filters import CharFilter
 from django import forms
 
-from SCM.Location.models import Location
+from SCM.Store.models import Store
 
 class FilterForm(forms.Form):
     template_name = 'scm/filter_form_template.html'
@@ -15,6 +15,6 @@ class LocationFilter(FilterSet):
 
     class Meta:
         form = FilterForm
-        model = Location
+        model = Store
         fields = ['code','description','detail']
 
