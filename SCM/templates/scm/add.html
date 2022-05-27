@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document" id="add_modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add a {%get_verbose_model_name_from_form form%}</h5>
+                <h5 class="modal-title">Add a {{model_name}}</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,7 +12,7 @@
                     {% csrf_token %}
                     {{form}}
                     {%include "scm/__messages.html"%}
-                    <button type="button" hx-trigger="click" hx-post={{request.path}} hx-target="#add_modal" hx-swap="outerHTML" class="btn btn-primary">Add</button>
+                    <button type="button" hx-trigger="click" hx-encoding="multipart/form-data" hx-post={{request.path}} hx-target="#add_modal" hx-swap="outerHTML" class="btn btn-primary">Add</button>
                 </form>
             </div>
         </div>

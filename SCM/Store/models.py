@@ -1,5 +1,3 @@
-from cProfile import label
-from tabnanny import verbose
 from django.db import models
 from SCM.Tenant.models import TenantAwareMixin 
 
@@ -16,8 +14,8 @@ class Store(TenantAwareMixin):
         
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['tenant','code'], name='unique_location_code'),
-            models.UniqueConstraint(fields=['tenant','description'],name='unique_location_description')
+            models.UniqueConstraint(fields=['tenant','code'], name='unique_store_code'),
+            models.UniqueConstraint(fields=['tenant','description'],name='unique_store_description')
         ]
         ordering = ['code']
         verbose_name = 'Location'

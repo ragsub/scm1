@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib import messages
+
 
 from SCM.User.forms import NewUserForm
 from SCM.Tenant.forms import NewTenantForm
@@ -18,6 +20,8 @@ def register_tenant(request):
             new_tenant = tenant_form.save()
 
             add_user_to_tenant(new_user, new_tenant)
+            messages.add_message(request=request,level=messages.SUCCESS,message='Account added. Login now.')
+
 
         
         context['user_form'] = user_form

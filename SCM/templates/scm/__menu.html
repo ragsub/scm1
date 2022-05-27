@@ -18,21 +18,24 @@
       <div class="offcanvas-body">
         <div class="navbar-nav flex-column justify-content-start flex-grow-1 pe-3 vh-100">
           <div class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </div>
-          <div class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link active" aria-current="page" href={%url "SCM.Session:welcome" %}>Welcome {{request.user}}</a>
           </div>
           <div class="nav-item dropdown dropend">
             <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Master Data
             </a>
             <div class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-              <div><a class="dropdown-item" href={%url "SCM.Store:view_stores"%}>Store Master</a></div>
-              <div><a class="dropdown-item" href="#">Product Master</a></div>
+              <div><a class="dropdown-item" href={%url "SCM.Store:view_stores" %}>Store Master</a></div>
+              <div><a class="dropdown-item" href={%url "SCM.Product:view_categories" %}>Category Master</a></div>
+              <div><a class="dropdown-item" href={%url "SCM.Product:view_products" %}>Product Master</a></div>
+
               <div><a class="dropdown-item" href="#">Store Product Master</a></div>
             </div>
           </div>
+          <div class="nav-item">
+            <a class="nav-link" href={%url "SCM.Session:logout" %}>Logout</a>
+          </div>
+
         </div>
       </div>
     </div>

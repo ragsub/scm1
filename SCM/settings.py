@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'ABC123VGT678NJU0987MJU890')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == "True"
@@ -30,6 +30,12 @@ DEBUG = os.getenv('DEBUG', 'False') == "True"
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1, localhost').split(",")
 
 CELERY_BROKER_URL = os.environ.get('REDIS_URL','redis://localhost:6379/0')
+
+DEFAULT_FILE_STORAGE = 'SCM.Tenant.storage.TenantFileSystemStorage'
+
+MEDIA_ROOT = '/media'
+
+ITEMS_IN_PAGE=5
 
 #CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
@@ -52,6 +58,7 @@ INSTALLED_APPS = [
     'SCM.Session',
     'SCM.Store',
     'SCM.Tags',
+    'SCM.Product'
 ]
 
 AUTH_USER_MODEL = 'User.User'
@@ -111,7 +118,6 @@ WSGI_APPLICATION = 'SCM.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-print(os.getenv("DEVELOPMENT_MODE"))
 
 if DEVELOPMENT_MODE is True:
 

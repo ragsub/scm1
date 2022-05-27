@@ -3,8 +3,8 @@ from django.core.validators import FileExtensionValidator
 
 from SCM.Store.models import Store
 from SCM.forms import CustomModelForm
-class AddLocationForm(CustomModelForm):
-    template_name = 'scm/form_template.html'
+
+class AddStoreForm(CustomModelForm):
     class Meta:
         model = Store
         fields = ['code','description','detail','latitude','longitude']
@@ -14,20 +14,11 @@ class AddLocationForm(CustomModelForm):
             'detail': forms.TextInput(attrs={'class': 'form-control'}),
             'latitude': forms.TextInput(attrs={'class': 'form-control'}),
             'longitude': forms.TextInput(attrs={'class': 'form-control'})
-
-
         }
         labels = {
-            'code': 'Code:',
-            'description':'Description:',
-            'detail':'Detail:',
-            'latitude':'Latitude',
-            'longitude':'Longitude'
+            'code': 'Store Code:',
+            'description':'Store Description:',
+            'detail':'Store Detail:',
+            'latitude':'Store Latitude',
+            'longitude':'Store Longitude'
         }
-
-class UploadLocationForm(forms.Form):
-    file = forms.FileField(allow_empty_file=False,validators=[FileExtensionValidator(allowed_extensions=['csv'])], label="Upload Location File", widget=forms.FileInput(attrs={'class': 'form-control'}))
-
-    def __init__(self, *args, **kwargs):
-        self.description='Upload Locations'
-        super (UploadLocationForm, self).__init__ (*args, **kwargs)

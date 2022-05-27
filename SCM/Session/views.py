@@ -1,9 +1,12 @@
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+
 
 from SCM.Session.forms import LoginForm
-
 from SCM.Tenant.utils import no_tenant_context, create_user_session
 from SCM.Tenant.crud import get_tenants_for_user
 
@@ -26,3 +29,8 @@ class LoginUser(LoginView):
 def welcome_user(request):
     context={}
     return render(request=request, template_name='session/welcome.html',context=context)
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect(reverse_lazy('SCM.Session:login'))  

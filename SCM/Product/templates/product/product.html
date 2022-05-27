@@ -2,7 +2,7 @@
 
 {% load tags %}
 
-{%block title%}{%get_plural_verbose_model_name page_obj.object_list.model%}{%endblock%}
+{%block title%}{{title}}{%endblock%}
 
 {%block content%}
 
@@ -20,7 +20,7 @@
 
 <div class="tab-content" id="nav-tabContent">
     <div class="container border p-2 mx-2 tab-pane fade" id ="action" x-ref="action_tab">
-        {% with add_url="SCM.Store:add_store" upload_url="SCM.Store:upload_store" %}     
+        {% with add_url="SCM.Product:add_product" %}     
         <div class="row">
             <div class="col-lg-3 col-sm-12 my-1 ">
                 <button hx-get={%url add_url%} hx-swap="innerHTML" hx-target="#new_tenant_modal" class="btn btn-primary w-100" @htmx:after-on-load.camel="setTimeout(function() {my_modal=new bootstrap.Modal($refs.x_new_tenant_modal);my_modal.show();}, 20);">Add</button>
@@ -42,7 +42,7 @@
     </form>
 </div>
 
-{% with add_url="SCM.Store:add_store" edit_url="SCM.Store:edit_store" delete_url="SCM.Store:delete_store"%}     
+{% with edit_url="SCM.Product:edit_product" delete_url="SCM.Product:delete_product"%}     
     {%include "scm/__list_item.html"%}
 {%endwith%}
 
