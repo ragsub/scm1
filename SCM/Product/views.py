@@ -114,9 +114,7 @@ def view_products(request):
 
     context['filter'] = product_filter
     context['page_obj'] = page_obj
-    
-    print(page_obj.object_list)
-    
+        
     return render(request=request,template_name='product/product.html',context=context)
 
 @login_required
@@ -137,6 +135,8 @@ def add_product(request):
                     print (e)
             else:
                 messages.add_message(request=request,level=messages.SUCCESS,message='Product '+ str(form.instance) +' added successfully' )
+                form = AddProductForm(instance=form.instance)
+
         else:
             print('form is not valid')
         context['form'] = form

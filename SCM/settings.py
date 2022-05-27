@@ -31,8 +31,6 @@ ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1, localhost').split(
 
 CELERY_BROKER_URL = os.environ.get('REDIS_URL','redis://localhost:6379/0')
 
-DEFAULT_FILE_STORAGE = 'SCM.Tenant.storage.TenantFileSystemStorage'
-
 MEDIA_ROOT = '/media'
 
 ITEMS_IN_PAGE=5
@@ -53,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.forms',
     'django_filters',
+    'cloudinary_storage',
+    'cloudinary',
     'SCM.User',
     'SCM.Tenant',
     'SCM.Session',
@@ -71,6 +71,14 @@ LOGIN_URL = '/session/login'
 
 #session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME' : os.getenv('CLOUD_NAME'),
+    'API_KEY' : os.getenv('API_KEY'), 
+    'API_SECRET' : os.getenv('API_SECRET') 
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CACHES = {
     'default': {

@@ -8,3 +8,5 @@ celery
 celery[redis]
 pillow
 gunicorn
+django-cloudinary-storage
+cloudinary
