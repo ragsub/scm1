@@ -1,19 +1,20 @@
-    {%load tags%}
-    <div class="modal-dialog" role="document" id="delete_modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Delete a {{model_name}}</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+{%load tags%}
+<div class="col m-0 p-0">
+    <form>
+        <div class="row">
+            {% csrf_token %}
+            <div class="col text-end">
+                Delete {{instance}} ?
             </div>
-            <div class="modal-body">
-                <form>
-                    {% csrf_token %}
-                    Delete {{instance}} ?
-                    {%include "scm/__messages.html"%}
-                    <button hx-trigger="click" hx-post={{request.path}} hx-target="#delete_modal" hx-swap="outerHTML" class="btn btn-primary">Delete</button>
-                </form>
+            <div class="col">
+                <button hx-trigger="click" hx-post="{% url delete_url id=instance.id %}" hx-target="#{{edit_record_n}}" hx-swap="innerHTML" hx-encoding="multipart/form-data" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+                <button class="btn btn-sm btn-secondary" x-on:click="$event.preventDefault();window.location.reload()"><i class="bi bi-arrow-counterclockwise"></i></button>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col">
+                {%include "scm/__messages.html"%}
+            </div>
+        </div>
+    </form>
+</div>

@@ -17,13 +17,10 @@ def get_verbose_model_name_from_form(obj):
 
 @register.simple_tag
 def get_verbose_field_name(obj, field_name):
-    print(obj)
-    print(field_name)
     return obj._meta.get_field(field_name).verbose_name
 
 @register.simple_tag
 def get_list_from_queryset(obj):
-    #return [(field.name, field.value_to_string(obj)) for field in obj._meta.fields]
     return serializers.serialize('python',obj)
 
 @register.simple_tag
@@ -43,3 +40,7 @@ def url_transform(request, **kwargs):
         updated[k] = v
 
     return updated.urlencode()
+
+@register.simple_tag
+def get_attribute(obj, attribute):
+    return getattr(obj,attribute)

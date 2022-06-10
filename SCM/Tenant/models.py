@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.functions import Cast
+from django.db.models.expressions import BaseExpression
 from django.db.models.constraints import UniqueConstraint
 
 from SCM.Tenant.utils import get_current_tenant, get_state
@@ -8,6 +10,14 @@ from SCM.Tenant.utils import get_current_tenant, get_state
 UserModel = get_user_model()
 
 # Create your models here.
+
+class CurrentTenant(BaseExpression):
+    def as_sql(self, compiler, connection, *args, **kwargs):
+        current_tenant = get_current_tenant()
+        tenant_id = str(current_tenant.id)
+        value = self.output_field.get_db_prep_value(tenant_id, connection)
+        return "%s", [str(value)]
+
 class Tenant(models.Model):
     tenant = models.CharField(max_length=50, unique=True)
     def __str__(self):
@@ -21,8 +31,13 @@ class TenantManager(models.Manager):
         if not state.get("enabled", True):
             return queryset
 
-        tenant = get_current_tenant()
-        queryset = queryset.filter(tenant__id=tenant.id)
+        field = self.model.tenant.field.target_field
+        cr = CurrentTenant(output_field=field)
+
+        queryset = queryset.filter(tenant_id=Cast(cr, output_field=field))
+
+        # tenant = get_current_tenant()
+        # queryset = queryset.filter(tenant__id=tenant.id)
         return queryset
     
     def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):

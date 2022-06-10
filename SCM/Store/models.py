@@ -1,5 +1,6 @@
 from django.db import models
 from SCM.Tenant.models import TenantAwareMixin 
+from SCM.Product.models import Product
 
 # Create your models here.
 class Store(TenantAwareMixin):
@@ -18,8 +19,27 @@ class Store(TenantAwareMixin):
             models.UniqueConstraint(fields=['tenant','description'],name='unique_store_description')
         ]
         ordering = ['code']
-        verbose_name = 'Location'
-        verbose_name_plural = 'Locations'
-    
+        verbose_name = 'Store'
+        verbose_name_plural = 'Stores'
+
+class ProductInStore(TenantAwareMixin):
+    product = models.ForeignKey(to=Product, verbose_name='Product', on_delete=models.PROTECT)
+    store = models.ForeignKey(to=Store, verbose_name='Store', on_delete=models.PROTECT)
+    list_price = models.FloatField(verbose_name = 'Product List Price') 
+    discounted_price = models.FloatField(verbose_name='Product Discounted Price')
+    active = models.BooleanField(verbose_name='Product Active',choices=((True,'Active'),(False,'Inactive')))
+
+    def __str__(self):
+        return str(self.store) + ' ' + str(self.product)
+
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['tenant','product','store'], name='unique_store_product'),
+        ]
+        ordering = ['store','product']
+        verbose_name = 'Product in Store'
+        verbose_name_plural = 'Products in Store'
+
         
 

@@ -13,7 +13,7 @@ def get_tenant_from_session(request):
 
 def get_state():
     default_state = {
-        'enabled':False,
+        'enabled':True,
         'tenant':None
     }
     state = getattr(state_local, 'state', default_state)

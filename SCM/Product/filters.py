@@ -16,10 +16,10 @@ class CategoryFilter(FilterSet):
         fields = ['code','description','detail']
 
 class ProductFilter(FilterSet):
-    category = ModelChoiceFilter(label='Category', queryset=Category.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
-    code = CharFilter(label='Category Code:', lookup_expr='icontains', widget = forms.TextInput(attrs={'class':'form-control','size':'10'}))
-    description = CharFilter(label='Category Description:', lookup_expr='icontains', widget = forms.TextInput(attrs={'class':'form-control','size':'10'}))
-    detail = CharFilter(label='Category Detail:', lookup_expr='icontains', widget = forms.TextInput(attrs={'class':'form-control','size':'10'}))
+    category = ModelChoiceFilter(label='Category', queryset=Category.objects.all(), widget=forms.Select(attrs={'class':'form-select'}))
+    code = CharFilter(label='Product Code:', lookup_expr='icontains', widget = forms.TextInput(attrs={'class':'form-control','size':'10'}))
+    description = CharFilter(label='Product Description:', lookup_expr='icontains', widget = forms.TextInput(attrs={'class':'form-control','size':'10'}))
+    detail = CharFilter(label='Product Detail:', lookup_expr='icontains', widget = forms.TextInput(attrs={'class':'form-control','size':'10'}))
 
     class Meta:
         form = FilterForm
