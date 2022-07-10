@@ -1,7 +1,13 @@
 from django import template
 from django.core import serializers
+from SCM.Tenant.models import Tenant
 
 register = template.Library()
+
+@register.simple_tag
+def get_tenant_name(tenant_id):
+    tenant = Tenant.objects.get(id=tenant_id)
+    return tenant.tenant
 
 @register.simple_tag
 def get_plural_verbose_model_name(obj): 

@@ -22,4 +22,6 @@ urlpatterns = [
     path('tenant/',include('SCM.Tenant.urls')),
     path('store/',include('SCM.Store.urls')),
     path('product/',include('SCM.Product.urls')),
+    path('shop/',include('SCM.Shop.urls')),
+
 ]

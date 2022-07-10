@@ -5,18 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {%include "scm/__include.html"%}
-    <title>Shop</title>
+    <title>{{title}}</title>
 </head>
 <body x-data="{}">
     <div x-ref="x_new_tenant_modal" id="new_tenant_modal" class="modal" tabindex="-1"></div>
-    <div class="row">
-        <div class="col">
-            branding
+    
+    <div class="row my-2 py-2">
+        <div class="col h1 text-center">
+            <div class="container">
+                {{title}}
+            </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col">
-            {{form}}
+            <div class="container">
+                <form>
+                {{filter.form}}
+                <button class="btn btn-primary">Filter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {%include "shop/__shop_results.html"%}
+
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="container">
+                {%include "scm/__pagination.html"%}
+            </div>
         </div>
     </div>
 </body>

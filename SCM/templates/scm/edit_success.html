@@ -10,4 +10,8 @@
     <div class="col-lg col-sm-6 my-1">
         <a hx-get={% url edit_url id=form.instance.id %} hx-swap="innerHTML" hx-target="#{{edit_record_n}}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
         <a hx-get="{% url delete_url id=form.instance.id%}" hx-swap="innerHTML" hx-target="#{{edit_record_n}}" class="btn btn-sm btn-primary"><i class="bi bi-trash-fill"></i></a>
+        {%if shop_url%}
+            {% get_tenant_name form.instance.tenant_id as tenant_name%}
+            <a href="{% url shop_url tenant_name=tenant_name shop_name=form.instance.description%}" class="btn btn-sm btn-primary"><i class="bi bi-shop"></i></i></a>
+        {%endif%}
     </div>

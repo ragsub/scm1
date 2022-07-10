@@ -7,8 +7,6 @@ from django.contrib import messages
 from django.forms import modelformset_factory
 from django.db.models import ProtectedError
 
-
-
 from SCM.Product.models import Category, Product
 from SCM.Product.filters import CategoryFilter, ProductFilter
 from SCM.Product.forms import AddCategoryForm, AddProductForm
@@ -16,9 +14,7 @@ from SCM.settings import ITEMS_IN_PAGE
 
 items_in_page = ITEMS_IN_PAGE
 
-
 # Create your views here.
-
 @login_required
 def view_categories(request):
     context = {}

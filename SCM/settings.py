@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'SCM.Session',
     'SCM.Store',
     'SCM.Tags',
-    'SCM.Product'
+    'SCM.Product',
+    'SCM.Shop'
 ]
 
 AUTH_USER_MODEL = 'User.User'
