@@ -1,0 +1,13 @@
+{%extends "customgenericview/listview.html"%}
+
+{%block add_button%}
+    <a href="{%url "SCM.MasterData:add_store" tenant_name=request.tenant%}?next={{request.get_full_path}}" class="btn btn-primary w-100" up-layer="new" up-accept-location="{{request.get_full_path}}" up-on-accepted="up.reload('#list-table')">Add</a>
+{%endblock add_button%}
+
+{%block action_url%}
+    <a up-target="#{{edit_record_n}}" href="{% url "SCM.MasterData:edit_store" tenant_name=request.tenant id=form.instance.id %}?next={{request.get_full_path}}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+    <a href="{%url "SCM.MasterData:delete_store" tenant_name=request.tenant id=form.instance.id %}?next={{request.get_full_path}}" up-target="#{{edit_record_n}}" class="btn btn-sm btn-primary"><i class="bi bi-trash-fill"></i></a>
+    {%if shop_url%}
+    <a href="{% url "SCM.Shop:view_shop" tenant_name=request.tenant shop_name=form.instance.description%}" class="btn btn-sm btn-primary"><i class="bi bi-shop"></i></i></a>
+    {%endif%}
+{%endblock action_url%}

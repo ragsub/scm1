@@ -9,7 +9,7 @@ from SCM.Store.models import ProductInStore
 class ProductInStoreFilter(FilterSet):
 
     def __init__(self, *args, **kwargs):
-        active_products_in_shop = kwargs.pop('active_products_in_shop')
+        #active_products_in_shop = kwargs.pop('active_products_in_shop')
         active_categories_in_shop = kwargs.pop('active_categories_in_shop')
         super(ProductInStoreFilter,self).__init__(*args, **kwargs)
         self.filters['category'].queryset = active_categories_in_shop

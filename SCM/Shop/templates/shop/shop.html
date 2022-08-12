@@ -9,22 +9,32 @@
 </head>
 <body x-data="{}">
     <div x-ref="x_new_tenant_modal" id="new_tenant_modal" class="modal" tabindex="-1"></div>
-    
-    <div class="row my-2 py-2">
-        <div class="col h1 text-center">
-            <div class="container">
-                {{title}}
-            </div>
-        </div>
-    </div>
-    
     <div class="row">
         <div class="col">
             <div class="container">
-                <form>
-                {{filter.form}}
-                <button class="btn btn-primary">Filter</button>
-                </form>
+            <div class="row my-2 py-2 border-bottom bg-light">
+                <div class="col-9 h1 text-center">
+                    {{title}}
+                </div>
+                <div class="col-3 text-end">
+                    <a href="{{request.path}}cart/" class="btn btn-sm btn-primary"><i class="bi bi-cart"> {{items_in_cart}}</i></a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <div class="row border p-2">
+                    <div class="col">
+                        <form class="p-3">
+                            {{filter.form}}
+                            <button class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+    
+                </div>
             </div>
         </div>
     </div>

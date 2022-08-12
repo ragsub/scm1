@@ -1,0 +1,6 @@
+{%extends "scm/delete_base.html"%}
+{%load tags%}
+{%block delete_button_block%}
+    {% get_tenant_name instance.tenant_id as tenant_name%}
+    <button hx-trigger="click" hx-post="{% url delete_url tenant_name=tenant_name shop_name=shop_name id=instance.id %}" hx-target="#{{edit_record_n}}" hx-swap="innerHTML" hx-encoding="multipart/form-data" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+{%endblock%}

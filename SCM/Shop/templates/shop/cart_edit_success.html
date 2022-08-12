@@ -1,0 +1,7 @@
+{%extends "scm/edit_success_base.html"%}
+{%load tags%}
+{%block action_url%}    
+    {% get_tenant_name form.instance.tenant_id as tenant_name%}
+    <a hx-get="{% url edit_url tenant_name=tenant_name shop_name=shop_name id=form.instance.id %}" hx-swap="innerHTML" hx-target="#{{edit_record_n}}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+    <a hx-get="{% url delete_url tenant_name=tenant_name shop_name=shop_name id=form.instance.id %}" hx-swap="innerHTML" hx-target="#{{edit_record_n}}" class="btn btn-sm btn-primary"><i class="bi bi-trash-fill"></i></a>
+{% endblock %}

@@ -10,3 +10,7 @@ pillow
 gunicorn
 django-cloudinary-storage
 cloudinary
+django-guardian
+django-bootstrap5
+django-allauth
+django-anymail[mailjet]

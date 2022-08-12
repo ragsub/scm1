@@ -18,17 +18,26 @@
       <div class="offcanvas-body">
         <div class="navbar-nav flex-column justify-content-start flex-grow-1 pe-3 vh-100">
           <div class="nav-item">
-            <a class="nav-link active" aria-current="page" href={%url "SCM.Session:welcome" %}>Welcome {{request.user}}</a>
+            <a class="nav-link active text-break" aria-current="page" href={%url "SCM.Account:welcome" tenant_name=request.tenant%}>Welcome {{request.user}}</a>
+          </div>
+          <div class="nav-item">
+            <a class="nav-link active" href="">{{request.tenant}}</a>
+          </div>
+          <div class="nav-item dropdown dropend">
+            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              User
+            </a>
+            <div class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+              <div><a class="dropdown-item" href={%url "SCM.Account:change_password" tenant_name=request.tenant %}>Change Password</a></div>
+            </div>
           </div>
           <div class="nav-item dropdown dropend">
             <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Master Data
             </a>
             <div class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-              <div><a class="dropdown-item" href={%url "SCM.Store:view_stores" %}>Store Master</a></div>
-              <div><a class="dropdown-item" href={%url "SCM.Product:view_categories" %}>Category Master</a></div>
-              <div><a class="dropdown-item" href={%url "SCM.Product:view_products" %}>Product Master</a></div>
-              <div><a class="dropdown-item" href={%url "SCM.Store:view_product_in_stores"%}>Store Product Master</a></div>
+              <div><a class="dropdown-item" href={%url "SCM.MasterData:view_stores" tenant_name=request.tenant %}>Store Master</a></div>
+              <div><a class="dropdown-item" href={%url "SCM.MasterData:view_categories" tenant_name=request.tenant %}>Category Master</a></div>
             </div>
           </div>
           <div class="nav-item">

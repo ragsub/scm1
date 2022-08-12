@@ -49,25 +49,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django.forms',
     'django_filters',
     'cloudinary_storage',
     'cloudinary',
+    'guardian',
+    'django_bootstrap5',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'anymail',
+    'SCM.MasterData',
     'SCM.User',
     'SCM.Tenant',
     'SCM.Session',
-    'SCM.Store',
     'SCM.Tags',
-    'SCM.Product',
-    'SCM.Shop'
+    'SCM.Account',
+    'SCM.CustomGenericView',
 ]
 
 AUTH_USER_MODEL = 'User.User'
 TENANT_MODEL = 'Tenant.Tenant'
 
-LOGIN_REDIRECT_URL = '/session/welcome'
 LOGOUT_REDIRECT_URL = '/session/login'
-LOGIN_URL = '/session/login'
+LOGIN_URL = '/session/login/'
 
 
 #session settings
@@ -97,7 +104,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'SCM.Tenant.middleware.TenantIdentification',
-
 ]
 
 ROOT_URLCONF = 'SCM.urls'
@@ -134,7 +140,7 @@ if DEVELOPMENT_MODE is True:
 
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'smplscm',
+            'NAME': 'smplshop',
             'USER': os.getenv('USER'),
             'PASSWORD': os.getenv('PASSWORD'),
             'HOST': os.getenv('HOST'),
@@ -178,6 +184,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+SITE_ID=1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -191,3 +198,121 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+#django-bootstrap settings
+
+BOOTSTRAP5 = {
+
+    # The complete URL to the Bootstrap CSS file.
+    # Note that a URL can be either a string
+    # ("https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"),
+    # or a dict with keys `url`, `integrity` and `crossorigin` like the default value below.
+    "css_url": {
+        "url": "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css",
+        "integrity": "sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl",
+        "crossorigin": "anonymous",
+    },
+
+    # The complete URL to the Bootstrap bundle JavaScript file.
+    "javascript_url": {
+        "url": "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js",
+        "integrity": "sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0",
+        "crossorigin": "anonymous",
+    },
+
+    # The complete URL to the Bootstrap CSS theme file (None means no theme).
+    "theme_url": None,
+
+    # Put JavaScript in the HEAD section of the HTML document (only relevant if you use bootstrap5.html).
+    'javascript_in_head': False,
+
+    # Wrapper class for non-inline fields.
+    # The default value "mb-3" is the spacing as used by Bootstrap 5 example code.
+    'wrapper_class': 'mb-3',
+
+    # Wrapper class for inline fields.
+    # The default value is empty, as Bootstrap5 example code doesn't use a wrapper class.
+    'inline_wrapper_class': '',
+
+    # Label class to use in horizontal forms.
+    'horizontal_label_class': 'col-sm-3',
+
+    # Field class to use in horizontal forms.
+    'horizontal_field_class': 'col-sm-9',
+
+    # Field class used for horizontal fields withut a label.
+    'horizontal_field_offset_class': 'offset-sm-2',
+
+    # Set placeholder attributes to label if no placeholder is provided.
+    'set_placeholder': True,
+
+    # Class to indicate required field (better to set this in your Django form).
+    'required_css_class': '',
+
+    # Class to indicate field has one or more errors (better to set this in your Django form).
+    'error_css_class': '',
+
+    # Class to indicate success, meaning the field has valid input (better to set this in your Django form).
+    'success_css_class': '',
+
+    # Enable or disable Bootstrap 5 server side validation classes (separate from the indicator classes above).
+    'server_side_validation': True,
+
+    # Renderers (only set these if you have studied the source and understand the inner workings).
+    'formset_renderers':{
+        'default': 'django_bootstrap5.renderers.FormsetRenderer',
+    },
+    'form_renderers': {
+        'default': 'django_bootstrap5.renderers.FormRenderer',
+    },
+    'field_renderers': {
+        'default': 'django_bootstrap5.renderers.FieldRenderer',
+    },
+}
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '621605175256-qfvm0guckq69ddhve89m1d7c64fkes6e.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+ACCOUNT_ADAPTER = 'SCM.Account.adapter.MyAccountAdapter'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+
+EMAIL_HOST = os.getenv('MAILGUN_SMTP_SERVER')
+EMAIL_HOST_PASSWORD = os.getenv('MAILGUN_SMTP_PASSWORD')
+EMAIL_HOST_USER = os.getenv('MAILGUN_SMTP_LOGIN')
+EMAIL_PORT = os.getenv('MAILGUN_SMTP_PORT')
+
+
+EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"
+ANYMAIL = {
+    "MAILJET_API_KEY": os.getenv('MAILJET_API_KEY'),
+    "MAILJET_SECRET_KEY": os.getenv('MAILJET_SECRET_KEY'),
+}
+print(ANYMAIL['MAILJET_API_KEY'])
+print(ANYMAIL['MAILJET_SECRET_KEY'])
+
+MAILJET_API_URL = "https://api.mailjet.com/v3.1/"

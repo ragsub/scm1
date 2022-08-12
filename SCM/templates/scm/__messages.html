@@ -1,4 +1,5 @@
-<div class="messages">
+{%load django_bootstrap5 %}
+{% comment %} <div class="messages">
     {% for message in messages %}
         {%if message.tags == 'info'%}
         <div class="alert alert-info">
@@ -12,4 +13,5 @@
         {%endif%}
         {{ message }}</div>
     {% endfor %}
-</div>
+</div> {% endcomment %}
+{%bootstrap_messages%} 

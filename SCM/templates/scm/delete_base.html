@@ -1,0 +1,22 @@
+{%load tags%}
+<div class="row py-1 border-bottom rounded" id="{{edit_record_n}}">
+<div class="col m-0 p-0">
+    <form action="{%url delete_url tenant_name=tenant_name id=instance.id%}?next={{success_url}}" method="post" up-submit up-target="#{{edit_record_n}}">
+        <div class="row">
+            {% csrf_token %}
+            <div class="col text-end">
+                Delete {{instance}} ?
+            </div>
+            <div class="col">
+                {% block delete_button_block %}{% endblock delete_button_block %}
+                <button class="btn btn-sm btn-secondary" x-on:click="$event.preventDefault();window.location.reload()"><i class="bi bi-arrow-counterclockwise"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {%include "scm/__messages.html"%}
+            </div>
+        </div>
+    </form>
+</div>
+</div>

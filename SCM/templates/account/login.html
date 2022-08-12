@@ -1,0 +1,76 @@
+{% extends "account/base.html" %}
+{% load django_bootstrap5%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+  <div class="container w-auto">
+    <div class="row vh-100 justify-content-center align-items-center">
+      <div class="col-lg-6 col-sm-12 align-items-center justify-content-center">
+          <div class="row">
+            <div class="col">
+              <div class="container d-flex flex-column align-items-center justify-content-center">
+                <div class="d-flex flex-row justify-column-center align-items-center">
+                  {%include "scm/__brand.html"%}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row my-3 border-bottom">
+            <div class="col">
+              <div class="h2 text-center">{% trans "Sign In" %}</div>
+            </div>
+          </div>
+          <div class="row my-3">
+            <div class="col">
+              <div class="accordion" id="signinoption">
+                <div class="accordion-item">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#social">
+                      Sign-in with 3rd party
+                    </button>
+                  </h3>
+                  <div id="social" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#signinoption">
+                    <div class="accordion-body">
+                      {% get_providers as socialaccount_providers %}
+                      {% if socialaccount_providers %}
+                      <div class="socialaccount_ballot">
+                      <ul class="socialaccount_providers list-group list-group-horizontal list-group-flush">
+                        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                      </ul>
+                      {% include "socialaccount/snippets/login_extra.html" %}
+                      {%endif%}
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#direct">
+                      Sign-in directly
+                    </button>
+                  </h3>
+                  <div id="direct" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#signinoption">
+                    <div class="accordion-body">
+                      <form class="login" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {% bootstrap_form form layout="horizontal"%}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                        <button class="primaryAction btn btn-primary w-100" type="submit">{% trans "Sign In" %}</button>
+                      </form>
+                      {{ signup_url }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

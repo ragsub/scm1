@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('session/',include('SCM.Session.urls')),
     path('tenant/',include('SCM.Tenant.urls')),
-    path('store/',include('SCM.Store.urls')),
-    path('product/',include('SCM.Product.urls')),
-    path('shop/',include('SCM.Shop.urls')),
-
+    path('accounts/', include('allauth.urls')),
+    path('shop/<str:tenant_name>/masterdata/', include('SCM.MasterData.urls')),
+    path('shop/<str:tenant_name>/account/', include('SCM.Account.urls')),
+    # path('shop/<str:tenant_name>/product/', include('SCM.Product.urls')),
+    # path('shop/<str:tenant_name>/shop/', include('SCM.Shop.urls')),
 ]

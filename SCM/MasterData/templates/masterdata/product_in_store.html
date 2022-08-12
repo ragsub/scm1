@@ -1,0 +1,25 @@
+{%extends "scm/base_with_grid.html"%}
+
+{% load tags %}
+
+{%block title%}{{title}}{%endblock%}
+
+{%block content%}
+
+     
+{% with add_url="SCM.Store:add_product_in_store" edit_url="SCM.Store:edit_product_in_store" delete_url="SCM.Store:delete_product_in_store"%}
+{%include "scm/__list_header.html"%}
+{%include "scm/__list_item.html"%}
+{%endwith%}
+
+<div class="container">
+<div class="row my-3">
+    <div class="col d-flex flex-column align-items-center">
+        {%include "scm/__pagination.html"%}
+    </div>
+</div>
+</div>
+
+
+{%endblock%}
+    

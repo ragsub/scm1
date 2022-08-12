@@ -1,0 +1,22 @@
+{%extends "scm/base.html"%}
+{% block body_block %}
+<div class="container-fluid">
+    <div class="row no-gutters bg-light py-2 d-none d-lg-block">
+        <div class="col d-flex justify-content-center p-0 m-0">
+            {%include "scm/__brand.html"%}
+        </div>
+    </div>
+    <div class="row no-gutters m-0 p-0">
+        <div class="col-lg-2 m-0 p-0">
+            {%include "scm/__menu.html"%}
+        </div>
+        <div class="col-lg-10 col-sm-12 m-0 p-0">
+            <div class="row my-1 py-1 no-gutters">
+                <div class="col">
+                    {%block content%}{%endblock content%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body_block %}

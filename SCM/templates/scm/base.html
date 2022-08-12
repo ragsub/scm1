@@ -4,30 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title_block %}{% endblock title_block %}
+    {%block head_block%}{%endblock head_block%}
     {%include "scm/__include.html"%}
-    <title>{%block title%}{% endblock %}</title>
 </head>
-<body x-data="{}">
-    <div class="container-fluid">
-        <div x-ref="x_new_tenant_modal" id="new_tenant_modal" class="modal" tabindex="-1"></div>
-        <div class="row no-gutters bg-light py-2 d-none d-lg-block">
-            <div class="col d-flex justify-content-center p-0 m-0">
-                {%include "scm/__brand.html"%}
-            </div>
-        </div>
-        <div class="row no-gutters m-0 p-0">
-            <div class="col-lg-2 m-0 p-0">
-                {%include "scm/__menu.html"%}
-            </div>
-            <div class="col-lg-10 col-sm-12 m-0 p-0">
-                <div class="row my-1 py-1 no-gutters">
-                    <div class="col">
-                        {%block content%}{%endblock%}
-                    </div>
-                </div>
-            </div>
+<body>
+    {% block body_block %}
 
-        </div>
-    </div>
+    {% endblock body_block %}
 </body>
 </html>

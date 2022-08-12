@@ -1,0 +1,17 @@
+{%load tags%}
+<div class="row py-1 border-bottom rounded" id="{{edit_record_n}}">
+{% for field in form %}
+    {% if field.name != "id"%}
+    <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">
+        {{field.label}}
+    </div>
+    <div class="col-lg col-sm-6 my-1 text-break">
+        {%get_attribute form.instance field.name%}
+    </div>
+    {%endif%}
+{%endfor%}
+    <div class="col-lg col-sm-6 my-1">
+        {%block action_url%}    
+        {%endblock%}
+    </div>
+</div>

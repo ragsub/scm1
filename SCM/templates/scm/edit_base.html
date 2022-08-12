@@ -1,0 +1,53 @@
+{%load tags%}
+{%load django_bootstrap5%}
+<div class="row py-1 border-bottom rounded" id="{{edit_record_n}}">
+
+<div class="col m-0 p-0">
+    <form action="{%url edit_url tenant_name=tenant_name id=form.instance.id%}?next={{success_url}}" method="post" up-submit up-target="#{{edit_record_n}}">
+        <div class="row m-0 p-0">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field.errors }}
+                {{ hidden_field }}
+            {% endfor %}
+
+            {%for field in form%}
+            {% if field.name != "id"%}
+            <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">
+                {{field.label}}
+            </div>
+            <div class="col-lg col-sm-6 my-1 text-break">
+                {%if field.is_hidden %}
+                {%get_attribute form.instance field.name%}
+                {%else%}
+                {% bootstrap_field field show_label=False%}
+                {%endif%}
+                {% comment %} {{ field.errors }} {% endcomment %}
+        
+                {% if field.help_text %}
+                <span class="helptext">{{ field.help_text|safe }}</span>
+                {% endif %}
+            </div>
+            {%endif%}
+            {%endfor%}
+            <div class="col-lg col-sm-6 my-1">
+                {% block edit_button_section %}{% endblock edit_button_section %}
+                <a href="{{success_url}}" class="btn btn-sm btn-secondary" up-target="#{{edit_record_n}}"><i class="bi bi-arrow-counterclockwise"></i></a>
+            </div>
+        </div>
+        <div class="row m-0 p-0">
+            <div class="col m-0 p-0">
+        {% if messages %}
+            {%include "scm/__messages.html"%}
+        {% endif %}
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+    
+
+

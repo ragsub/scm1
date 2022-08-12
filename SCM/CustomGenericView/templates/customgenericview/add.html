@@ -1,0 +1,13 @@
+{%extends "scm/base.html"%}
+{%load django_bootstrap5%}
+{% block body_block %}
+<div up-main class="container">
+    <h5 class="h5">Add a {{model_name}}</h5>
+    <form method="POST" action="{{request.path}}?next={{success_url}}" enctype="multipart/form-data" up-submit="" >
+        {% csrf_token %}
+        {%bootstrap_form form layout="horizontal"%}
+        {%include "scm/__messages.html"%}
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+{% endblock body_block %}

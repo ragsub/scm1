@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%include "scm/__include.html"%}
+    <title>{{title}}</title>
+</head>
+<body x-data="{}">
+    <div x-ref="x_new_tenant_modal" id="new_tenant_modal" class="modal" tabindex="-1"></div>
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <div class="row my-2 py-2 border-bottom bg-light">
+                    <div class="col-9 h1 text-center">
+                        {{title}}
+                    </div>
+                    <div class="col-3 text-end">
+                        <a href={%url "SCM.Shop:view_shop" tenant_name=tenant shop_name=store%} class="btn btn-sm btn-primary"><i class="bi bi-shop"></i>{{items_in_cart}}</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% with add_url="" edit_url="SCM.Shop:edit_cart" delete_url="SCM.Shop:delete_cart" shop_name=store%}
+        {%include "shop/__cart_list_item.html"%}
+    {%endwith%}
+
+    <div class="row my-2">
+        <div class="col">
+            <div class="container d-flex justify-content-center">
+                <a href={%url order%}class="btn btn-primary">Place Order</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

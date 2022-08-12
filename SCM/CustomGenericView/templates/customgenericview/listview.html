@@ -1,0 +1,122 @@
+{%extends "scm/base_with_grid.html"%}
+
+{% load tags %}
+{%load django_bootstrap5%}
+
+{%block content%}
+
+{% block test_block %}{% endblock test_block %}
+     
+<div class="row mb-2 pb-2 justify-content-center">
+    <div class="col text-center">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link d-flex" id="nav-filter-tab" data-bs-target="#filter" role="tab" aria-controls="nav-home" aria-selected="false"><i class="bi bi-funnel-fill"></i><span class="d-none d-lg-block px-2">Filter</span></button>
+                <script>
+                    up.on("click","#nav-filter-tab",function(event,element){
+                        up.element.toggleClass(up.element.get('#nav-action-tab'),'active', false)
+                        up.element.toggleClass(up.element.get('#action'),'active', false)
+
+                        if (bootstrap.Tab.getInstance(up.element.get("#nav-filter-tab"))) {
+                            up.element.toggleClass(up.element.get('#nav-filter-tab'),'active')
+                            up.element.toggleClass(up.element.get('#filter'),'active')
+                        } 
+                        else {
+                            let filter_tab = bootstrap.Tab.getOrCreateInstance(up.element.get("#nav-filter-tab")); 
+                            filter_tab.show();
+                        }
+                    })
+                </script>
+                <button class="nav-link d-flex" id="nav-action-tab" data-bs-target="#action" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="bi bi-gear-fill"></i><span class="d-none d-lg-block px-2">Action</span></button>
+                <script>    
+                    up.on("click","#nav-action-tab",function(event,element) {
+                        up.element.toggleClass(up.element.get('#nav-filter-tab'),'active', false)
+                        up.element.toggleClass(up.element.get('#filter'),'active', false)
+
+                        if (bootstrap.Tab.getInstance(up.element.get("#nav-action-tab"))) {
+                            up.element.toggleClass(up.element.get('#nav-action-tab'),'active')
+                            up.element.toggleClass(up.element.get('#action'),'active')
+                        } 
+                        else {
+                            let action_tab = bootstrap.Tab.getOrCreateInstance(up.element.get("#nav-action-tab")); 
+                            action_tab.show();
+                        }
+                    })
+                </script>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="tab-content" id="nav-tabContent">
+    <div class="container border p-2 mx-2 tab-pane fade" id ="action">
+        <div class="row">
+            <div class="col-lg-3 col-sm-12 my-1">
+                {%block add_button%}{%endblock add_button%}
+            </div>
+        </div>
+    </div>
+    
+    <div class="container border p-2 mx-2 tab-pane fade" id="filter">
+    <form method="GET">
+        {% bootstrap_form filter.form layout="horizontal"%}
+        <div class="row">
+            <div class="col-lg-3 mt-2 pt-2 col-sm-12"><button class="btn btn-primary w-100" style="size:20px">Filter</button></div>
+            <div class="col-lg-3 mt-2 pt-2 col-sm-12"><a class="btn btn-secondary w-100" style="size:20px" href={{request.path }}>Reset</a></div>
+        </div>
+    </form>
+    </container>
+</div>
+
+<div class="container" id="list-table">
+    <div class="row">
+        <div class="col">
+            {% for form in formset %}
+                {%if forloop.first%}
+                <div class="row">
+                    {% for field in form %}
+                    {% if field.name != "id"%}
+                    <div class="col fw-bold mx-1 p-2 d-none d-lg-block">
+                        {{field.label}}
+                    </div>
+                    {%endif%}
+                    {%endfor%}
+                    <div class="col fw-bold mx-1 p-2 d-none d-lg-block">Actions</div>
+                </div>
+                {%endif%}
+                
+                {% with y=form.instance.id|stringformat:"s" %}
+                {% with "edit_record_"|add:y as edit_record_n %}
+                <div class="row py-1 border-bottom rounded" id="{{edit_record_n}}">
+                    {% for field in form %}
+                    {% if field.name != "id"%}
+                    <div class="col-lg col-sm-6 d-lg-none fw-bold my-1">
+                        {{field.label}}
+                    </div>
+                    <div class="col-lg col-sm-6 my-1 text-break">
+                        {%get_attribute form.instance field.name%}
+                    </div>
+                    {%endif%}
+                    {%endfor%}
+                    <div class="col-lg col-sm-6 my-1">
+                        {%block action_url%}    
+                        {%endblock action_url%}
+                    </div>
+                </div>
+                {%endwith%}
+                {%endwith%}
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col d-flex flex-column align-items-center">
+            {%include "scm/__pagination.html"%}
+        </div>
+    </div>
+</div>
+
+
+{%endblock content%}
+    

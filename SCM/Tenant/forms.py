@@ -3,7 +3,7 @@ from django import forms
 from SCM.Tenant.models import Tenant
 
 class NewTenantForm(forms.ModelForm):
-    template_name = 'scm/form_template.html'
+    # template_name = 'scm/form_template.html'
 
     class Meta:
         model = Tenant

@@ -1,0 +1,11 @@
+{% extends "scm/edit_base.html" %}
+{%load tags%}
+
+{% block edit_button_section %}
+    {% get_tenant_name form.instance.tenant_id as tenant_name%}
+    <button type="button" hx-trigger="click" hx-post={%url edit_url tenant_name=tenant_name shop_name=shop_name id=form.instance.id%} hx-target="#{{edit_record_n}}" hx-swap="innerHTML" hx-encoding="multipart/form-data" class="btn btn-sm btn-primary"><i class="bi bi-check"></i></button>
+{% endblock edit_button_section %}
+
+    
+
+

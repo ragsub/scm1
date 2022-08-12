@@ -1,0 +1,30 @@
+{%load django_bootstrap5%}
+<div class="row mb-2 pb-2 justify-content-center">
+    <div class="col text-center">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link d-flex" x-ref="filter_trigger" id="nav-filter-tab" x-data="{show_filter:false}" x-init="show_filter=false" x-on:click="show_filter=!show_filter; if (show_filter===true) {let filter_tab = bootstrap.Tab.getOrCreateInstance($refs.filter_trigger); filter_tab.show();} else {$refs.filter_tab.classList.remove('active');$refs.filter_trigger.classList.remove('active');}" data-bs-target="#filter" role="tab" aria-controls="nav-home" aria-selected="false"><i class="bi bi-funnel-fill"></i><span class="d-none d-lg-block px-2">Filter</span></button>
+                <button class="nav-link d-flex" x-ref="action_trigger" id="nav-action-tab" x-data="{show_action:false}" x-init="show_action=false" x-on:click="show_action=!show_action; if (show_action===true) {let action_tab = bootstrap.Tab.getOrCreateInstance($refs.action_trigger); action_tab.show();} else {$refs.action_tab.classList.remove('active');$refs.action_trigger.classList.remove('active');}" data-bs-target="#action" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="bi bi-gear-fill"></i><span class="d-none d-lg-block px-2">Action</span></button>        
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="tab-content" id="nav-tabContent">
+    <div class="container border p-2 mx-2 tab-pane fade" id ="action" x-ref="action_tab">
+        <div class="row">
+            <div class="col-lg-3 col-sm-12 my-1 ">
+                {% block add_button %}{% endblock add_button %}
+                {% comment %} <a href="{%url add_url tenant_name=tenant_name%}?next={{success_url}}" class="btn btn-primary w-100" up-layer="new" up-accept-location="{{success_url}}" up-on-accepted="up.log.enable();console.log('hi');up.reload('#list-table')">Add</a> {% endcomment %}
+
+            </div>
+        </div>
+    </div>
+    
+    <form class="container tab-pane fade border p-2 mx-2" x-ref="filter_tab" id="filter" method="GET">
+        {%bootstrap_form filter.form layout="horizontal"%}
+        <div class="row">
+            <div class="col-lg-3 mt-2 pt-2 col-sm-12"><button class="btn btn-primary w-100" style="size:20px">Filter</button></div>
+            <div class="col-lg-3 mt-2 pt-2 col-sm-12"><a class="btn btn-secondary w-100" style="size:20px" href={{request.path }}>Reset</a></div>
+        </div>
+    </form>
+</div>

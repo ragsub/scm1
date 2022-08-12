@@ -24,11 +24,7 @@ class LoginUser(LoginView):
         with no_tenant_context():
             tenant_for_user = get_tenants_for_user(self.request.user)
         create_user_session(self.request, tenant_for_user.tenant)
-        return super().get_success_url()
-
-def welcome_user(request):
-    context={}
-    return render(request=request, template_name='session/welcome.html',context=context)
+        return reverse_lazy('SCM.Account:welcome', kwargs={'tenant_name':tenant_for_user.tenant})
 
 @login_required
 def logout_user(request):

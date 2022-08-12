@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.contrib.auth.models import Group
 
 
 from SCM.User.forms import NewUserForm
@@ -19,9 +20,13 @@ def register_tenant(request):
             new_user = user_form.save()
             new_tenant = tenant_form.save()
 
-            add_user_to_tenant(new_user, new_tenant)
-            messages.add_message(request=request,level=messages.SUCCESS,message='Account added. Login now.')
+            tenant_group = Group.objects.create(name=new_tenant.tenant)
+            owner_group = Group.objects.get(name='Owner')
+            new_user.groups.add(tenant_group, owner_group)
 
+            add_user_to_tenant(new_user, new_tenant)
+
+            messages.add_message(request=request,level=messages.SUCCESS,message='Account added. Login now.')
 
         
         context['user_form'] = user_form

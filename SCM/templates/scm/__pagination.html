@@ -1,5 +1,9 @@
 {%load tags%}
-<ul class="pagination">
+{%load django_bootstrap5%}
+
+{% bootstrap_pagination page_obj %}
+
+{% comment %} <ul class="pagination">
     {% if page_obj.has_previous %}
         <li class="page-item">
             {% if "?" in request.get_full_path %}
@@ -27,4 +31,4 @@
     {%else%}
         <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-arrow-right-square-fill"></i></a></li>
     {% endif %}
-</ul>
+</ul> {% endcomment %}
